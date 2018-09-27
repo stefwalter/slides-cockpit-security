@@ -24,7 +24,7 @@
 
     <section data-state="title">
         <h1>Is Cockpit Secure?</h1>
-        <h2 class="comment">I'm glad you asked</h2>
+        <h2 class="comment alt">Great question. I'm glad you asked</h2>
         <br>
         <div style="margin-left: 5em; margin-right: 5em;">
             <h3 style="font-weight: normal;"><strong>Stef Walter</strong></h3>
@@ -35,7 +35,8 @@
     </section>
 
     <section>
-        <p>What is Security?</p>
+        <h2 class="alt">You make me feel secure</h2>
+        <p class="comment">Choose a level of security based on your requirements</p>
 	<aside class="notes">
             <p>Security is vital to your Linux systems. It’s not a binary thing
 	    though. Depending on your requirements you end up choosing a level
@@ -49,49 +50,36 @@
     </section>
 
     <section>
-	<p>Cockpit is a Linux session in your browser</p>
-        <aside class="notes">
-            <p>Let’s start by stacking the deck against Cockpit. First off it’s
-            important to remember that Cockpit is actually an alternative Linux
-            session … along side X11, SSH and VT logins. It’s a session in the PAM,
-            logind, TTY, SELinux and other senses. The logged in browser and the
-            javascript code it is running can interact directly with the system
-            as part of that session.
-        </aside>
-    </section>
-
-    <section>
-        <section data-state="head">
-            <h2>Show me:<br>
-                <strong>Access a System API</strong></h2>
+        <section data-state="title">
+            <h1>Cockpit:<br>a <span class="comment">Linux session</span><br>
+                in your browser</h1>
             <aside class="notes">
+                <p>Let’s start by stacking the deck against Cockpit. First off it’s
+                important to remember that Cockpit is actually an alternative Linux
+                session … along side X11, SSH and VT logins. It’s a session in the PAM,
+                logind, TTY, SELinux and other senses. The logged in browser and the
+                javascript code it is running can interact directly with the system
+                as part of that session.
+
                 <pre>
-                                            proxy = cockpit.dbus("org.freedesktop.hostname1").proxy()
-                                            proxy.KernelRelease
-                                            proxy.StaticHostname
-                                            proxy.SetStaticHostname("marmalade", true)
-                                            - Switch to terminal
-                                            hostname
-                                            hostnamectl set-hostname ZeroG
-                                            proxy.StaticHostname
+                          proxy = cockpit.dbus("org.freedesktop.hostname1").proxy()
+                          proxy.KernelRelease
+                          proxy.StaticHostname
+                          proxy.SetStaticHostname("marmalade", true)
+                          - Switch to terminal
+                          hostname
+                          hostnamectl set-hostname ZeroG
+                          proxy.StaticHostname
                 </pre>
-                <li>Let's look at some examples, here's the hostnamed call we made earlier.
-                    We are typing javascript code directly in the interactive console in a
-                    browser. If you have Cockpit running on your system try this.</li>
 
-                <li>It's trivial to interact with the DBUS API, easier even than if you
-                    were on the system itself issueing gdbus commands... but that's the point
-                    ... we are on the system ... logged into the system ... and the javascript code
-                    here is running as part of the login session.</li>
+                <p>Let's look at some examples, here's the hostnamed call we made earlier.
+                We are typing javascript code directly in the interactive console in a
+                browser. If you have Cockpit running on your system try this.</p>
 
-                <li>This is what got me excited about Cockpit. The very idea
-                    that there was code in the browser interacting directly with the system
-                    cutting through the usual layers of crap ... really makes building
-                    admin tools fun again.</li>
-
-                <li>And of course it works both ways, changes made via the command line
-                    tools update the api and those changes are picked up by the cockpit UI
-                    in the browser.</li>
+                <p>It's trivial to interact with the DBUS API, easier even than if you
+                were on the system itself issueing gdbus commands... but that's the point
+                ... we are on the system ... logged into the system ... and the javascript code
+                here is running as part of the login session.</p>
             </aside>
         </section>
 
@@ -112,200 +100,337 @@
     </section>
 
     <section>
-        <h2>But are browsers secure?</h2>
-        <aside class="notes">
-            But can we trust browsers with your security? Firefox is about 15 million lines of code that all have to work together, and after looking at the list of security updates you gotta think about what that means for your security.
-        </aside>
+        <section data-state="title">
+            <h1>But are <span class="comment">browsers</span> secure?</h1>
+            <aside class="notes">
+                <p>But can we trust browsers with your security? Firefox is about
+                15 million lines of code that all have to work together, and after
+                looking at the list of security updates you gotta think about what
+                that means for your security.
+            </aside>
+        </section>
+
+        <section>
+            <img src="images/firefox-openhub.png" width="800px">
+        </section>
+
+        <section>
+            TODO: Browser security vulnerabilities
+            <p><a href="https://www.mozilla.org/en-US/security/known-vulnerabilities/firefox/"
+                  >https://www.mozilla.org/en-US/security/known-vulnerabilities/firefox/</a></p>
+        </section>
+
+        <section>
+            TODO: Interacting with browsers
+            <aside class="notes">
+                <p>Any management system with a browser interface requires a secure browser.
+                That includes Satellite, Tower, Foreman, Landscape, CloudForms, cPanel and more.
+                If anything like this interacts with your systems, then security bugs in
+                browsers have a direct effect on your system security.</p>
+            </aside>
+        </section>
+
+        <section>
+            TODO: Distro's built by browsers
+            <aside class="notes">
+                <p>Secondly take a look at any browser based tools that were involved in the
+                creation or curation of the software installed on your system, including tools
+                used by your Linux distribution.</p>
+
+                <p>If your security requirements are strict and you must avoid browsers at all
+                costs, then be sure to audit all possible places that browsers were involved in
+                what’s running on your systems. It’s harder than you think.</p>
+
+                <p>Unless your system is extremely isolated and hand crafted, it turns out that
+                browsers are already highly involved in many security paths for your systems.
+                Cockpit does not change this situation significantly.</p>
+            </aside>
+        </section>
+
     </section>
 
     <section>
-        <img src="images/firefox-openhub.png" width="800px">
+        <section data-state="title">
+            <h1><span class="comment">Security Policy</span><br>within the browser</h1>
+            <aside class="notes">
+                <p>Cockpit runs javascript code from the system it’s logged into. Obviously
+                that code is protected by the standard Same Origin Policy that web
+                browsers adhere to.</p>
+
+                <p>But how does Cockpit protect against bugs in the code. How can we be sure
+                that only the javascript code installed on the system is run, and bugs are
+                not exploited to run code trojaned into logs or other data loaded by Cockpit?</p>
+            </aside>
+        </section>
+
+        <section>
+            <p>Content-Security-Policy</p>
+            <aside class="notes">
+                <p>Browsers have a security technology called Content Security Policy which
+                is sorta like SELinux or Apparmor in your browser. The policy describes
+                exactly where code can be loaded, what can be run, and what sorts of
+                connections can be made by the browser.</p>
+
+                <p>In Cockpit’s case we send a strict Content-Security-Policy header that
+                only allows code installed in Cockpit packages on the logged into system to
+                be run. Although individual parts of Cockpit can override this default, it’s
+                rarely done. The default security policy looks like this:</p>
+
+                <pre>
+Content-Security-Policy: default-src 'self' connect-src 'self' ws: wss:
+                </pre>
+            </aside>
+        </section>
+
+        <section>
+            <img src="images/csp-denied.png">
+        </section>
     </section>
 
     <section>
-        TODO: Firefox security video
-        https://www.mozilla.org/en-US/security/known-vulnerabilities/firefox/
-    </section>
+        <section data-state="title">
+            <h1>Cockpit has<br> <span class="comment">no special privileges</span></h1>
+            <aside class="notes">
+                <p> Back to Cockpit. What does that session look like? Cockpit itself
+                has no special privileges. The credentials of the logged in user start
+                a login session, and Cockpit can perform exactly the tasks that the
+                logged in user has access to. It has no more or less permissions.</p>
+            </aside>
+        </section>
 
-    <section>
-        <aside class="notes">
-            Any management system with a browser interface requires a secure browser. That includes Satellite, Tower, Foreman, Landscape, CloudForms, cPanel and more. If anything like this interacts with your systems, then security bugs in browsers have a direct effect on your system security.
+        <section>
+            <img src="images/permission-denied-terminal.png">
+            <aside class="notes">
+                <p>You can examine anything about Cockpit security. Log into Cockpit,
+                open the Terminal page and run commands like the following:</p>
 
-Secondly take a look at any browser based tools that were involved in the creation or curation of the software installed on your system, including tools used by your Linux distribution.
-
-If your security requirements are strict and you must avoid browsers at all costs, then be sure to audit all possible places that browsers were involved in what’s running on your systems. It’s harder than you think.
-
-Unless your system is extremely isolated and hand crafted, it turns out that browsers are already highly involved in many security paths for your systems. Cockpit does not change this situation significantly.
-        </aside>
-    </section>
-
-    <section>
-        <h2>Cockpit has no special privileges</h2>
-        <aside class="notes">
-Back to Cockpit. What does that session look like? Cockpit itself has no special privileges. The credentials of the logged in user start a login session, and Cockpit can perform exactly the tasks that the logged in user has access to. It has no more or less permissions.
-        </aside>
-    </section>
-
-    <section>
-        TODO: Show permission denied
-        <aside class="notes">
-You can examine anything about Cockpit security. Log into Cockpit, open the Terminal page and run commands like the following:
-
+                <pre>
 $ id
 uid=1000(stef) gid=1000(stef) groups=1000(stef),10(wheel)
 $ cat /etc/shadow
 cat: /etc/shadow: Permission denied
+                </pre>
+            </aside>
+        </section>
 
-If you logged in as a non-root user, you’ll find that Cockpit has no elevated privileges on the system. Try this out via Javascript by pressing Ctrl-Shift-J in Cockpit. Now type commands like the following:
+        <section>
+            <img src="images/permission-denied-console.png">
+            <aside class="notes">
+                <p>If you logged in as a non-root user, you’ll find that Cockpit has
+                no elevated privileges on the system. Try this out via Javascript
+                by pressing Ctrl-Shift-J in Cockpit. Now type commands like the following:</p>
 
+                <pre>
 > zz = cockpit.spawn(["id"])
 > zz = cockpit.spawn(["cat", "/etc/shadow"])
-        </aside>
+                </pre>
+            </aside>
+        </section>
+
     </section>
 
     <section>
-        <h2>Escalating Privileges</h2>
-        <aside class="notes">
-        So if Cockpit only has the priviliges of the authenticated user, how does it perform admin tasks? Well obviously one could log in as root, and the logged in session would have all capabilities and access to the system.
+        <section data-state="title">
+            <h1><span class="comment">Escalating</span> Privileges</h1>
+            <aside class="notes">
+                <p>So if Cockpit only has the priviliges of the authenticated user, how
+                does it perform admin tasks? Well obviously one could log in as root,
+                and the logged in session would have all capabilities and access to
+                the system.</p>
 
-But logging in directly as root is a poor security practice. Cockpit supports escalating privileges via sudo and/or polkit. If, and only if, the logged in user has permission to use sudo or polkit to escalate privileges.
-        </aside>
+                <p>But logging in directly as root is a poor security practice. Cockpit
+                supports escalating privileges via sudo and/or polkit. If, and only if,
+                the logged in user has permission to use sudo or polkit to escalate
+                privileges.</p>
+            </aside>
+        </section>
+
+        <section>
+            <img src="images/cockpit-reuse-password.png">
+            <aside class="notes">
+                <p>This checkbox allows Cockpit to use your login password to escalate
+                privileges via sudo and/or polkit when necessary to perform admin tasks.
+                This is as if you log in with SSH and then used sudo -s or similar to
+                perform some admin tasks. Try the following command once you’ve logged
+                in with the checkbox:</p>
+            </aside>
+        </section>
+
+        <section>
+            <img src="images/escalate-console.png">
+        </section>
+
+        <section>
+            <img src="images/escalate-terminal.png">
+        </section>
+
+        <section>
+            <img src="images/cockpit-unlocked.png">
+            <aside class="notes">
+                You can track the state of this privilege escalation in the upper right corner of Cockpit:
+            </aside>
+        </section>
     </section>
 
     <section>
-        <img src="images/cockpit-reuse-password.png">
-        <aside class="notes">
-            This checkbox allows Cockpit to use your login password to escalate privileges via sudo and/or polkit when necessary to perform admin tasks. This is as if you log in with SSH and then used sudo -s or similar to perform some admin tasks. Try the following command once you’ve logged in with the checkbox:
-        </aside>
+        <section data-state="title">
+            <h1>Principle of<br><span class="comment">Least Privilege</span></h1>
+            <aside class="notes">
+                <p>A good security practice is to run services, processes or tools with the
+                least amount of security privilege necessary to perform their task. To
+                accomplish this, Cockpit is split up in multiple components, each of which
+                runs with as little access to the system as possible.</p>
+
+                <p>On RHEL, Fedora, Ubuntu, Debian and any other distro that we distribute
+                Cockpit for … we test and make sure that this privilege separation is in
+                effect: Including correct SELinux policies, and unprivileged unix users.</p>
+            </aside>
+        </section>
+
+        <section>
+            <pre>
+system_u:system_r:cockpit_ws_t:s0         cockpit-ws Ssl  19:48   0:01 /usr/libexec/cockpit-ws
+system_u:system_r:cockpit_session_t:s0    root       S    19:58   0:00 /usr/libexec/cockpit-session localhost
+unconfined_u:unconfined_r:unconfined_t:s0 stef       Sl   19:58   0:00 cockpit-bridge
+unconfined_u:unconfined_r:unconfined_t:s0 root       Sl   19:58   0:00 /usr/bin/cockpit-bridge --privileged</pre>
+            <pre>
+$ ls -lZ /usr/libexec/cockpit-session
+-rwsr-x---. 1 root cockpit-ws system_u:object_r:cockpit_session_exec_t:s0 42016 /usr/libexec/cockpit-session
+$ ls -lZ /usr/libexec/cockpit-ws
+-rwxr-xr-x. 1 root root system_u:object_r:cockpit_ws_exec_t:s0 283528 /usr/libexec/cockpit-ws</pre>
+            <aside class="notes">
+                <p>The cockpit-bridge is the part of Cockpit that runs in the login
+                session. It is similar to a login shell, in that it runs with the
+                privileges and security context of the logged in user. In the above case
+                I logged in as the stef user. If you checked the Reuse my password for
+                privileged tasks option on the login screen, you might also see this
+                process running as root in which case pkexec or sudo was used (see above)
+                to escalate privileges.</p>
+
+                <p>The cockpit-session part of Cockpit is a small binary that performs
+                authentication for the logged in user. It uses PAM or GSSAPI to perform
+                that authentication. cockpit-session is installed setuid, in such a way
+                that it can be launched by the unprivileged cockpit-ws user (see below)
+                during user login. This process performs limited tasks, and has a
+                restrictive SELinux cockpit_session_t context. Lastly is a reasonably
+                short program written in plain C so it is easier to audit.</p>
+
+                <p>This is the component that listens on the network. It hands off
+                authentication information to the cockpit-session to perform a login
+                and launch cockpit-bridge. The cockpit-ws binary runs as an unprivileged
+                unix cockpit-ws user, with a restrictive SELinux cockpit_ws_t policy.</p>
+            </aside>
+        </section>
+
     </section>
 
-    <section>
-        <img src="images/cockpit-unlocked.png">
-        <aside class="notes">
-            You can track the state of this privilege escalation in the upper right corner of Cockpit:
-        </aside>
-    </section>
 
     <section>
-        <h2>Principle of Least Privilege</h2>
-        <aside class="notes">
-            A good security practice is to run services, processes or tools with the least amount of security privilege necessary to perform their task. To accomplish this, Cockpit is split up in multiple components, each of which runs with as little access to the system as possible.
+        <section data-state="title">
+            <h1>The network facing<br>
+                <span class="comment">TCP port</span></h1>
+        </section>
 
-On RHEL, Fedora, Ubuntu, Debian and any other distro that we distribute Cockpit for … we test and make sure that this privilege separation is in effect: Including correct SELinux policies, and unprivileged unix users.
-        </aside>
-    </section>
-
-    <section>
-        Here’s some of the privelege separation described:
-
-stef        9690  ...  Sl  06:08  0:00 cockpit-bridge
-
-The cockpit-bridge is the part of Cockpit that runs in the login session. It is similar to a login shell, in that it runs with the privileges and security context of the logged in user. In the above case I logged in as the stef user. If you checked the Reuse my password for privileged tasks option on the login screen, you might also see this process running as root in which case pkexec or sudo was used (see above) to escalate privileges.
-
-root        9947  ...  S   06:10  0:00 /usr/libexec/cockpit-session
-
-The cockpit-session part of Cockpit is a small binary that performs authentication for the logged in user. It uses PAM or GSSAPI to perform that authentication. cockpit-session is installed setuid, in such a way that it can be launched by the unprivileged cockpit-ws user (see below) during user login. This process performs limited tasks, and has a restrictive SELinux cockpit_session_t context. Lastly is a reasonably short program written in plain C so it is easier to audit.
-
-cockpit-ws 11295  ...  Ssl 06:14  0:00 /usr/libexec/cockpit-ws
-
-This is the component that listens on the network. It hands off authentication information to the cockpit-session to perform a login and launch cockpit-bridge. The cockpit-ws binary runs as an unprivileged unix cockpit-ws user, with a restrictive SELinux cockpit_ws_t policy.
-    </section>
-
-    <section>
-        <h2>Security Policy within the browser</h2>
-        <aside class="notes">
-        Cockpit runs javascript code from the system it’s logged into. Obviously that code is protected by the standard Same Origin Policy that web browsers adhere to.
-
-But how does Cockpit protect against bugs in the code. How can we be sure that only the javascript code installed on the system is run, and bugs are not exploited to run code trojaned into logs or other data loaded by Cockpit?
-        </aside>
-    </section>
-
-    <section>
-        Content-Security-Policy
-        <aside class="notes">
-Browsers have a security technology called Content Security Policy which is sorta like SELinux or Apparmor in your browser. The policy describes exactly where code can be loaded, what can be run, and what sorts of connections can be made by the browser.
-
-In Cockpit’s case we send a strict Content-Security-Policy header that only allows code installed in Cockpit packages on the logged into system to be run. Although individual parts of Cockpit can override this default, it’s rarely done. The default security policy looks like this:
-
- Content-Security-Policy: default-src 'self' connect-src 'self' ws: wss:
-        </aside>
-    </section>
-
-    <section>
-        <img src="images/csp-denied.png">
-    </section>
-
-    <section>
-        <h2>Security of the network facing TCP port</h2>
-    </section>
-
-    <section>
-        <pre>
+        <section>
+            <pre>
 $ cat /etc/services | grep 9090
 websm           9090/tcp                # WebSM
-websm           9090/udp                # WebSM
-        </pre>
-        WebSM: "Web Systems Manager"
-        <aside class="notes">
-        Cockpit typically listens on TCP port 9090 on a host. This is the websm or “Web Systems Manager” network port. Opening a network facing port has security risks. Both the exposed surface area and stuff listening on that port, in this case cockpit-ws, are risky.
-        </aside>
+websm           9090/udp                # WebSM</pre>
+            <p>WebSM: "Web Systems Manager"</p>
+            <aside class="notes">
+                <p>Cockpit typically listens on TCP port 9090 on a host. This is the
+                websm or “Web Systems Manager” network port. Opening a network facing
+                port has security risks. Both the exposed surface area and stuff
+                listening on that port, in this case cockpit-ws, are risky.</p>
+            </aside>
+        </section>
+
+        <section>
+            Use Cockpit over SSH
+            <aside class="notes">
+                <p>If this is an issue for your systems, you can use Cockpit over the
+                SSH port already have open. But wait, how does that work? Browsers
+                don’t natively speak the SSH protocol, and getting a browser to do
+                so would be an impressive party trick.</p>
+
+                <p>To use Cockpit over SSH, use a bastion host model: Start cockpit-ws
+                on port 9090 on a single host, perhaps even your localhost. Connect to
+                that with your browser and use that first Cockpit instance to log into
+                to Cockpit on other machines others over SSH. If you draw it up, it
+                looks something like this:</p>
+            </aside>
+        </section>
+
+        <section>
+            <img src="images/transport-multi-small.png">
+            <aside class="notes">
+                <p>Atomic Host includes Cockpit by default, in this way. Atomic Host
+                doesn’t include cockpit-ws or open port 9090 by default, but expects
+                you to connect from another running Cockpit instance over port 22.
+                There’s also the possibility to run cockpit-ws as a container to
+                accomplish this.</p>
+            </aside>
+        </section>
+
+        <section>
+            <img src="images/cockpit-login-alternate.png">
+            <aside class="notes">
+                <p>When you’re trying this out in real life, specify an alternate
+                server on the Cockpit login screen. The SSH protocol will be used
+                to connect to it:</p>
+            </aside>
+        </section>
+
+        <section data-state="no-footer" data-background-video="video/multiple-hosts.ogv"
+                 data-background-color="black" data-background-video-muted="true">
+            <aside class="notes">
+                <p>Or you can add other machines to a local dashboard, and Cockpit will
+                connect to them via SSH. Even usage of SSH key based authentication works
+                great:</p>
+
+                <p>Obviously, when you use Cockpit over SSH, it’s not just a real Linux
+                session, it’s also an SSH session in every way. Try it out.</p>
+            </aside>
+        </section>
     </section>
 
     <section>
-        Use Cockpit over SSH
-        <aside class="notes">
-            If this is an issue for your systems, you can use Cockpit over the SSH port already have open. But wait, how does that work? Browsers don’t natively speak the SSH protocol, and getting a browser to do so would be an impressive party trick.
+        <section data-state="title">
+            <h1>What about the<br><span class="comment">Web Server</span>?</h1>
+        </section>
 
-To use Cockpit over SSH, use a bastion host model: Start cockpit-ws on port 9090 on a single host, perhaps even your localhost. Connect to that with your browser and use that first Cockpit instance to log into to Cockpit on other machines others over SSH. If you draw it up, it looks something like this:
-        </aside>
+        <section>
+            <p><span class="comment">cockpit-ws</span>: Socket activated, written in C,
+            only enough HTTP to load Cockpit into your browser</p>
+            <aside class="notes">
+                <p>Cockpit doesn’t use a web server like Apache, NGINX or Lightttp.
+                It doesn’t use an application server like Tomcat. So by and large the
+                security concerns related to deploying those projects do not apply here.
+                Cockpit implements just enough of an HTTP server to serve the Cockpit
+                application to your browser.</p>
+
+                <p>This tiny HTTP server is included in the cockpit-ws process, and
+                protected via strong SELinux and unix privilege separation.</p>
+
+                <p>But if you’re environment is uncomfortable with use of the Cockpit
+                built-in HTTP server, you can use Cockpit over SSH as seen in
+                the section above.</p>
+            </aside>
+        </section>
     </section>
 
     <section>
-        <img src="images/transport-multi-small.png">
+        <div style="text-align: left">
+            <h3 class="comment">There's much more</h3>
+            <ul>
+                <li><a href="http://cockpit-project.org/guide/latest/sso.html">Kerberos authentication</a></li>
+                <li><a href="http://cockpit-project.org/guide/latest/https.html">TLS and certificates</a></li>
+                <li><a href="https://raw.githubusercontent.com/cockpit-project/cockpit/master/doc/authentication.md">Bring your own authentication</a></li>
+            </ul>
+        </div>
         <aside class="notes">
-            Atomic Host includes Cockpit by default, in this way. Atomic Host doesn’t include cockpit-ws or open port 9090 by default, but expects you to connect from another running Cockpit instance over port 22. There’s also the possibility to run cockpit-ws as a container to accomplish this.
-        </aside>
-    </section>
-
-    <section>
-        <img src="images/cockpit-login-alternate.png">
-        <aside class="notes">
-            When you’re trying this out in real life, specify an alternate server on the Cockpit login screen. The SSH protocol will be used to connect to it:
-        </aside>
-    </section>
-
-    <section data-state="no-footer" data-background-video="video/multiple-hosts.ogv" data-background-color="black"
-                                                                                     data-background-video-muted="true">
-        <aside class="notes">
-            Or you can add other machines to a local dashboard, and Cockpit will connect to them via SSH. Even usage of SSH key based authentication works great:
-            Obviously, when you use Cockpit over SSH, it’s not just a real Linux session, it’s also an SSH session in every way. Try it out.
-        </aside>
-    </section>
-
-    <section>
-        <h2>But what about the Web Server</h2>
-    </section>
-
-    <section>
-        Socket activated, written in C, only enough HTTP to load Cockpit into your browser
-        <aside class="notes">
-            Cockpit doesn’t use a web server like Apache, NGINX or Lightttp. It doesn’t use an application server like Tomcat. So by and large the security concerns related to deploying those projects do not apply here. Cockpit implements just enough of an HTTP server to serve the Cockpit application to your browser.
-
-This tiny HTTP server is included in the cockpit-ws process, and protected via strong SELinux and unix privilege separation.
-
-But if you’re environment is uncomfortable with use of the Cockpit built-in HTTP server, environments use Cockpit over SSH as seen in the section above.
-        </aside>
-    </section>
-
-    <section>
-        There's so much more
-        <ul>
-            Kerberos authentication
-            TLS and certificates
-            Integrate your own authentication tool to replace cockpit-session
-        </ul>
-        <aside class="notes">
-            But suffice it to say, that Cockpit’s security is well thought out, layered and matches that of Linux in general.
+            <p>But suffice it to say, that Cockpit’s security is well thought out,
+            layered and matches that of Linux in general.</p>
         </aside>
     </section>
 
